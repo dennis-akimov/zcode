@@ -1,0 +1,21 @@
+services:
+  zcode:
+    build:
+      context: .
+      args:
+        ZCODE_VERSION: ${ZCODE_VERSION:-3.16.3}
+    image: zcode:${ZCODE_VERSION:-3.16.3}
+    container_name: zcode
+    init: true
+    restart: unless-stopped
+    environment:
+      VNC_PASSWORD: ${VNC_PASSWORD:?set VNC_PASSWORD in .env}
+      GEOMETRY: ${GEOMETRY:-1600x1000}
+    ports:
+      # VNC auth is DES-weak (RFC 6143 7.2.2): keep it on loopback, tunnel over SSH for remote use.
+      - "127.0.0.1:${NOVNC_PORT:-6080}:6080"
+    shm_size: 1gb # Chromium crashes tabs with Docker's 64 MB /dev/shm
+    security_opt:
+      - no-new-privileges:true
+    # No volumes: login, settings and ~/work live in the container layer.
+    # They survive stop/start/restart, and are lost on `make destroy` or a rebuild.
