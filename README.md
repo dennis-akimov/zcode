@@ -97,6 +97,7 @@ make open    # opens http://127.0.0.1:6080/vnc.html; the password is VNC_PASSWOR
 ```
 
 Sign in from the app's welcome page: Connect to Z.ai, or use an API key.
+No Z.ai account yet? [Register here for 10% off](https://z.ai/subscribe?ic=6ZMHQHAMKS) (referral link).
 See `.env.example` for the settings.
 
 ## Make targets
